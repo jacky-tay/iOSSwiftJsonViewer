@@ -37,7 +37,7 @@ public class JSONItemTableViewCell: UITableViewCell {
    @IBOutlet weak var valueLabel: UILabel!
    @IBOutlet weak var keyWidthConstraints: NSLayoutConstraint!
    
-   func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) -> CGFloat {
+   func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) {
       if !key.searchRanges.isEmpty {
          displayValue(keyLabel, defaultTextColor: UIColor.darkGrayColor(), displayText: key.description + " :", ranges: key.searchRanges)
       } else {
@@ -60,12 +60,6 @@ public class JSONItemTableViewCell: UITableViewCell {
       } else {
          valueLabel.text = value?.value?.description ?? "<NULL>"
       }
-      
-      var recommandedHeight: CGFloat = 44.0
-      if let text = valueLabel.text where text != tap {
-         recommandedHeight = text.calculateTextSize(width - keyWidth - 24.0, height: nil, font: valueLabel.font).height + 27.0
-      }
-      return recommandedHeight
    }
    
    private func displayValue(label: UILabel, defaultTextColor: UIColor, displayText: String, ranges: [NSRange]) {
