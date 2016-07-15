@@ -43,7 +43,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="key" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGi-ES-GtR" userLabel="Key">
-                                                    <rect key="frame" x="15" y="14" width="120" height="16"/>
+                                                    <rect key="frame" x="15" y="10" width="120" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="120" id="99S-CB-NvH"/>
                                                     </constraints>
@@ -52,7 +52,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcB-iA-lSr" userLabel="Value">
-                                                    <rect key="frame" x="143" y="14" width="442" height="16"/>
+                                                    <rect key="frame" x="143" y="10" width="442" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -60,11 +60,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="YcB-iA-lSr" firstAttribute="leading" secondItem="AGi-ES-GtR" secondAttribute="trailing" constant="8" symbolic="YES" id="6lL-L3-ydg"/>
-                                                <constraint firstItem="AGi-ES-GtR" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" constant="4" id="7Dr-Wg-tVu"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="YcB-iA-lSr" secondAttribute="bottom" constant="4" id="9vL-Gh-SRZ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="AGi-ES-GtR" secondAttribute="bottom" constant="4" id="ZUt-YB-dco"/>
+                                                <constraint firstItem="AGi-ES-GtR" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" id="7Dr-Wg-tVu"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="YcB-iA-lSr" secondAttribute="bottom" id="9vL-Gh-SRZ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="AGi-ES-GtR" secondAttribute="bottom" id="ZUt-YB-dco"/>
                                                 <constraint firstItem="AGi-ES-GtR" firstAttribute="leading" secondItem="fje-Dm-qff" secondAttribute="leadingMargin" id="g15-e3-rmK"/>
-                                                <constraint firstItem="YcB-iA-lSr" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" constant="4" id="vBV-8J-8H4"/>
+                                                <constraint firstItem="YcB-iA-lSr" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" id="vBV-8J-8H4"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="YcB-iA-lSr" secondAttribute="trailing" id="vCE-zP-RDH"/>
                                             </constraints>
                                         </tableViewCellContentView>
