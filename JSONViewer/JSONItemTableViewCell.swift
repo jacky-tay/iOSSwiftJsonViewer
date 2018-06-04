@@ -32,41 +32,44 @@ let JSONItemNoResultTableViewCellIdentifier = "JSONItemNoResultTableViewCell"
 let JSONItemTableViewCellIdentifier = "JSONItemTableViewCell"
 
 public class JSONItemTableViewCell: UITableViewCell {
-   
-   @IBOutlet weak var keyLabel: UILabel!
-   @IBOutlet weak var valueLabel: UILabel!
-   @IBOutlet weak var keyWidthConstraints: NSLayoutConstraint!
-   
-   func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) {
-      if !key.searchRanges.isEmpty {
-         displayValue(keyLabel, defaultTextColor: UIColor.darkGrayColor(), displayText: key.description + " :", ranges: key.searchRanges)
-      } else {
-         keyLabel.text = key.description + " :"
-      }
-      keyWidthConstraints.constant = keyWidth
-      
-      selectionStyle = .None
-      accessoryType = .None
-      
-      let tap = "Tap to view more"
-      if value?.value is NSNull {
-         valueLabel.text = "<NULL>"
-      } else if value?.value is JSONArray || value?.value is JSONObject || value?.value is Array<AnyObject> || value?.value is Dictionary<String, AnyObject> {
-         valueLabel.text = tap
-         selectionStyle = .Default
-         accessoryType = .DisclosureIndicator
-      } else if let displayText = value?.description, ranges = value?.searchRanges where !ranges.isEmpty {
-         displayValue(valueLabel, defaultTextColor: UIColor.darkTextColor(), displayText: displayText, ranges: ranges)
-      } else {
-         valueLabel.text = value?.value?.description ?? "<NULL>"
-      }
-   }
-   
-   private func displayValue(label: UILabel, defaultTextColor: UIColor, displayText: String, ranges: [NSRange]) {
-      let attributedString = NSMutableAttributedString(string: displayText, attributes: [NSForegroundColorAttributeName : defaultTextColor])
-      ranges.forEach {
-         attributedString.addAttributes([NSForegroundColorAttributeName: UIColor.whiteColor(), NSBackgroundColorAttributeName: tintColor.colorWithAlphaComponent(0.5)], range: $0)
-      } // forEach
-      label.attributedText = attributedString
-   }
+    
+    @IBOutlet weak var keyLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var keyWidthConstraints: NSLayoutConstraint!
+    
+    func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) {
+        if !key.searchRanges.isEmpty {
+            displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description + " :", ranges: key.searchRanges)
+        } else {
+            keyLabel.text = key.description + " :"
+        }
+        keyWidthConstraints.constant = keyWidth
+        
+        selectionStyle = .none
+        accessoryType = .none
+        
+        let tap = "Tap to view more"
+        if value?.value is NSNull {
+            valueLabel.text = "<NULL>"
+        }
+        else if value?.value is JSONArray || value?.value is JSONObject || value?.value is Array<AnyObject> || value?.value is Dictionary<String, AnyObject> {
+            valueLabel.text = tap
+            selectionStyle = .default
+            accessoryType = .disclosureIndicator
+        }
+        else if let displayText = value?.description, let ranges = value?.searchRanges, !ranges.isEmpty {
+            displayValue(label: valueLabel, defaultTextColor: UIColor.darkText, displayText: displayText, ranges: ranges)
+        }
+        else {
+            valueLabel.text = value?.value?.description ?? "<NULL>"
+        }
+    }
+    
+    private func displayValue(label: UILabel, defaultTextColor: UIColor, displayText: String, ranges: [NSRange]) {
+        let attributedString = NSMutableAttributedString(string: displayText, attributes: [.foregroundColor : defaultTextColor])
+        ranges.forEach {
+            attributedString.addAttributes([.foregroundColor: UIColor.white, .backgroundColor: tintColor.withAlphaComponent(0.5)], range: $0)
+        } // forEach
+        label.attributedText = attributedString
+    }
 }

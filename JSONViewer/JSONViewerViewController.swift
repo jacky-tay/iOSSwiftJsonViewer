@@ -41,16 +41,16 @@ public class JSONViewerViewController: UIViewController {
     private var keyWidth:CGFloat = 120
 
     public class func getViewController() -> JSONViewerViewController? {
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: JSONViewerViewController.self))
-        let viewController = storyboard.instantiateViewControllerWithIdentifier(JSONViewerViewControllerIdentifier) as? JSONViewerViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: JSONViewerViewController.self))
+        let viewController = storyboard.instantiateViewController(withIdentifier: JSONViewerViewControllerIdentifier) as? JSONViewerViewController
 
         return viewController
     }
 
     public class func getViewController(jsonString: String) -> JSONViewerViewController? {
         let viewController = getViewController()
-        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
-            let json = try? NSJSONSerialization.JSONObjectWithData(data, options: [])
+        if let data = jsonString.data(using: .utf8) {
+            let json = try? JSONSerialization.jsonObject(with: data, options: [])
             if let array = json as? Array<AnyObject> {
                 viewController?.jsonArray = JSONArray(content: array, section: nil)
             }
@@ -64,31 +64,31 @@ public class JSONViewerViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        if let searchText = searchText where !searchText.isEmpty {
+        if let searchText = searchText, !searchText.isEmpty {
             searchBar.text = searchText
             searchBar(searchBar, textDidChange: searchText)
         } else {
-            filterBySearch(nil)
+            filterBySearch(searchText: nil)
         }
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
-    public override func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let seletedIndex = tableView.indexPathForSelectedRow {
-            tableView.deselectRowAtIndexPath(seletedIndex, animated: true)
+            tableView.deselectRow(at: seletedIndex, animated: true)
         }
     }
 
     func filterBySearch(searchText: String?) {
-        jsonArray?.filterBySearch(searchText)
-        jsonObject?.filterBySearch(searchText)
+        _ = jsonArray?.filterBySearch(query: searchText)
+        _ = jsonObject?.filterBySearch(query: searchText)
 
-        let font = UIFont.systemFontOfSize(14)
-        let allUniqueKeys = Set(jsonObject?.getAllKeys(false) ?? jsonArray?.getAllKeys(false) ?? [])
-        let allKeyWidth = allUniqueKeys.map { ($0 + " :").calculateTextSize(nil, height: nil, font: font).width }
-        keyWidth = allKeyWidth.maxElement() ?? 120.0
+        let font = UIFont.systemFont(ofSize: 14)
+        let allUniqueKeys = Set(jsonObject?.getAllKeys(includeSubLevel: false) ?? jsonArray?.getAllKeys(includeSubLevel: false) ?? [])
+        let allKeyWidth = allUniqueKeys.map { ($0 + " :").calculateTextSize(width: nil, height: nil, font: font).width }
+        keyWidth = allKeyWidth.max() ?? 120.0
         tableView.reloadData()
     }
 }
@@ -97,15 +97,15 @@ extension JSONViewerViewController: UITableViewDataSource {
 
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var section = 1
-        if let array = jsonArray where (array.display.first is JSONArray || array.display.first is JSONObject) {
+        if let array = jsonArray, (array.display.first is JSONArray || array.display.first is JSONObject) {
             section = array.display.count
         }
         return section
     }
 
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = jsonObject?.display.count ?? 0
-        if let array = jsonArray where array.display.count > section {
+        if let array = jsonArray, array.display.count > section {
             // if item at section is a JSON object, then display it as seperated section
             if let object = array.display[section] as? JSONObject {
                 count = object.display.count
@@ -118,40 +118,44 @@ extension JSONViewerViewController: UITableViewDataSource {
         return count == 0 ? 1 : count
     }
 
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        var key = Searchable(value: "")
+        var key = Searchable(value: "" as AnyObject)
         var value: Searchable? = nil
 
-        if let dictionary = jsonObject where dictionary.display.count > indexPath.row {
+        if let dictionary = jsonObject, dictionary.display.count > indexPath.row {
             key = dictionary.display[indexPath.row].searchableKey
             value = dictionary.display[indexPath.row].searchableValue
-        } else if let array = jsonArray where array.display.count > indexPath.section {
-            if let dictionary = array.display[indexPath.section] as? JSONObject where dictionary.display.count > indexPath.row {
+        }
+        else if let array = jsonArray, array.display.count > indexPath.section {
+            if let dictionary = array.display[indexPath.section] as? JSONObject, dictionary.display.count > indexPath.row {
                 key = dictionary.display[indexPath.row].searchableKey
                 value = dictionary.display[indexPath.row].searchableValue
-            } else if let jsonValue = array.display[indexPath.row] as? Searchable {
-                key = Searchable(value: String(format: "Item %i", jsonValue.index ?? 0))
+            }
+            else if let jsonValue = array.display[indexPath.row] as? Searchable {
+                key = Searchable(value: String(format: "Item %i", jsonValue.index ?? 0) as AnyObject)
                 value = jsonValue
-            } else if let subArray = array.display[indexPath.section] as? JSONArray where subArray.display.count > indexPath.row {
+            }
+            else if let subArray = array.display[indexPath.section] as? JSONArray, subArray.display.count > indexPath.row {
                 if let jsonValue = subArray.display[indexPath.row] as? Searchable {
-                    key = Searchable(value: String(format: "Item %i", jsonValue.index ?? 0))
+                    key = Searchable(value: String(format: "Item %i", jsonValue.index ?? 0) as AnyObject)
                     value = jsonValue
                 }
             }
         }
         if value != nil {
-            let cell = tableView.dequeueReusableCellWithIdentifier(JSONItemTableViewCellIdentifier, forIndexPath: indexPath)
-            (cell as? JSONItemTableViewCell)?.updateContent(key, value: value, keyWidth: keyWidth, width: UIScreen.mainScreen().bounds.width)
+            let cell = tableView.dequeueReusableCell(withIdentifier: JSONItemTableViewCellIdentifier, for: indexPath)
+            (cell as? JSONItemTableViewCell)?.updateContent(key: key, value: value, keyWidth: keyWidth, width: UIScreen.main.bounds.width)
             return cell
-        } else {
-            return tableView.dequeueReusableCellWithIdentifier(JSONItemNoResultTableViewCellIdentifier, forIndexPath: indexPath)
+        }
+        else {
+            return tableView.dequeueReusableCell(withIdentifier: JSONItemNoResultTableViewCellIdentifier, for: indexPath)
         }
     }
 
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var title = navigationItem.title ?? "Section"
-        if let array = jsonArray where array.display.count > section {
+        if let array = jsonArray, array.display.count > section {
             if let object = array.display[section] as? JSONObject {
                 title = String(format: "%@ %i", title, object.section ?? 0)
             } else if let subArray = array.display[section] as? JSONArray {
@@ -166,16 +170,17 @@ extension JSONViewerViewController: UITableViewDataSource {
 
 extension JSONViewerViewController: UITableViewDelegate {
 
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let viewController = JSONViewerViewController.getViewController() {
             var key = ""
             var value: AnyObject? // JSON child
 
-            if let dictionary = jsonObject where dictionary.display.count > indexPath.row {
+            if let dictionary = jsonObject, dictionary.display.count > indexPath.row {
                 key = dictionary.display[indexPath.row].key
                 value = dictionary.display[indexPath.row].value
-            } else if let array = jsonArray where array.display.count > indexPath.section {
-                if let object = array.display[indexPath.section] as? JSONObject where object.display.count > indexPath.row {
+            }
+            else if let array = jsonArray, array.display.count > indexPath.section {
+                if let object = array.display[indexPath.section] as? JSONObject, object.display.count > indexPath.row {
                     key = object.display[indexPath.row].key
                     value = object.display[indexPath.row].value
                 }
@@ -183,9 +188,11 @@ extension JSONViewerViewController: UITableViewDelegate {
 
             if let array = value as? JSONArray {
                 viewController.jsonArray = array
-            } else if let dictionary = value as? JSONObject {
+            }
+            else if let dictionary = value as? JSONObject {
                 viewController.jsonObject = dictionary
-            } else {
+            }
+            else {
                 value = nil
             }
 
@@ -199,26 +206,26 @@ extension JSONViewerViewController: UITableViewDelegate {
 }
 
 extension JSONViewerViewController: UISearchBarDelegate {
-    public func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        filterBySearch(nil)
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filterBySearch(searchText: nil)
         searchBar.text = nil
         searchBar.resignFirstResponder()
     }
 
-    public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 
-    public func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
     
-    public func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
     }
     
-    public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filterBySearch(searchText)
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterBySearch(searchText: searchText)
     }
 }
 

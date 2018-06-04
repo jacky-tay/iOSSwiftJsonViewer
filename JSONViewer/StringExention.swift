@@ -37,7 +37,7 @@ extension String {
       
       while !sizeFound {
          let size = CGSize(width: _width, height: _height)
-         let rect = self.boundingRectWithSize(size, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        let rect = self.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
          sizeFound = abs((rect.size.height - _height) / rect.size.height) < 0.05
          _width = rect.size.width
          _height = rect.size.height

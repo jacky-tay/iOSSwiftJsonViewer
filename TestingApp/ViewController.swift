@@ -37,11 +37,11 @@ class ViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let path = NSBundle.mainBundle().pathForResource("testing", ofType: "json"),
-            content = try? String(contentsOfFile: path),
-            viewController = JSONViewerViewController.getViewController(content) {
+        if let path = Bundle.main.path(forResource: "testing", ofType: "json"),
+            let content = try? String(contentsOfFile: path),
+            let viewController = JSONViewerViewController.getViewController(jsonString: content) {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
