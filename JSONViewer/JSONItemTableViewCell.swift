@@ -37,11 +37,11 @@ public class JSONItemTableViewCell: UITableViewCell {
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var keyWidthConstraints: NSLayoutConstraint!
     
-    func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) {
+    func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat) {
         if !key.searchRanges.isEmpty {
-            displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description + " :", ranges: key.searchRanges, len: key.len)
+            displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description, ranges: key.searchRanges, len: key.len)
         } else {
-            keyLabel.text = key.description + " :"
+            keyLabel.text = key.description
         }
         keyWidthConstraints.constant = keyWidth
         

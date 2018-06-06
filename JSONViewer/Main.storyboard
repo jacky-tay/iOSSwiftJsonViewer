@@ -47,35 +47,43 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="key" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGi-ES-GtR" userLabel="Key">
-                                                    <rect key="frame" x="15" y="11" width="120" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="120" id="99S-CB-NvH"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcB-iA-lSr" userLabel="Value">
-                                                    <rect key="frame" x="143" y="11" width="442" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dbi-fm-bVD">
+                                                    <rect key="frame" x="15" y="11" width="345" height="22"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" preservesSuperviewLayoutMargins="YES" text="key" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGi-ES-GtR" userLabel="Key">
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="22"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="k01-ue-0qn"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERw-np-1iF">
+                                                            <rect key="frame" x="104" y="0.0" width="5" height="22"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="value" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcB-iA-lSr" userLabel="Value">
+                                                            <rect key="frame" x="113" y="0.0" width="232" height="22"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="YcB-iA-lSr" firstAttribute="leading" secondItem="AGi-ES-GtR" secondAttribute="trailing" constant="8" symbolic="YES" id="6lL-L3-ydg"/>
-                                                <constraint firstItem="AGi-ES-GtR" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" id="7Dr-Wg-tVu"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="YcB-iA-lSr" secondAttribute="bottom" id="9vL-Gh-SRZ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="AGi-ES-GtR" secondAttribute="bottom" id="ZUt-YB-dco"/>
-                                                <constraint firstItem="AGi-ES-GtR" firstAttribute="leading" secondItem="fje-Dm-qff" secondAttribute="leadingMargin" id="g15-e3-rmK"/>
-                                                <constraint firstItem="YcB-iA-lSr" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" id="vBV-8J-8H4"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="YcB-iA-lSr" secondAttribute="trailing" id="vCE-zP-RDH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="dbi-fm-bVD" secondAttribute="bottom" id="DuA-jR-Br9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dbi-fm-bVD" secondAttribute="trailing" id="HRt-5t-rAl"/>
+                                                <constraint firstItem="dbi-fm-bVD" firstAttribute="leading" secondItem="fje-Dm-qff" secondAttribute="leadingMargin" id="jjr-TC-Vjc"/>
+                                                <constraint firstItem="dbi-fm-bVD" firstAttribute="top" secondItem="fje-Dm-qff" secondAttribute="topMargin" id="vBg-FK-Iz2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="keyLabel" destination="AGi-ES-GtR" id="3xI-8J-pdF"/>
-                                            <outlet property="keyWidthConstraints" destination="99S-CB-NvH" id="ekI-Mm-Oy0"/>
+                                            <outlet property="keyWidthConstraints" destination="k01-ue-0qn" id="o3J-xG-X50"/>
                                             <outlet property="valueLabel" destination="YcB-iA-lSr" id="1OW-Zj-j8g"/>
                                         </connections>
                                     </tableViewCell>

@@ -85,9 +85,9 @@ public class JSONViewerViewController: UIViewController {
         _ = jsonArray?.filterBySearch(query: searchText)
         _ = jsonObject?.filterBySearch(query: searchText)
 
-        let font = UIFont.systemFont(ofSize: 14)
+        let font = UIFont.systemFont(ofSize: 17)
         let allUniqueKeys = Set(jsonObject?.getAllKeys(includeSubLevel: false) ?? jsonArray?.getAllKeys(includeSubLevel: false) ?? [])
-        let allKeyWidth = allUniqueKeys.map { ($0 + " :").calculateTextSize(width: nil, height: nil, font: font).width }
+        let allKeyWidth = allUniqueKeys.map { ($0).calculateTextSize(width: nil, height: nil, font: font).width }
         keyWidth = allKeyWidth.max() ?? 120.0
         tableView.reloadData()
     }
@@ -145,7 +145,7 @@ extension JSONViewerViewController: UITableViewDataSource {
         }
         if value != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: JSONItemTableViewCellIdentifier, for: indexPath)
-            (cell as? JSONItemTableViewCell)?.updateContent(key: key, value: value, keyWidth: keyWidth, width: UIScreen.main.bounds.width)
+            (cell as? JSONItemTableViewCell)?.updateContent(key: key, value: value, keyWidth: keyWidth)
             return cell
         }
         else {
