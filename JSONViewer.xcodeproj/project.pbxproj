@@ -36,6 +36,7 @@
 		286BFA631CB8521800778815 /* testing.json in Resources */ = {isa = PBXBuildFile; fileRef = 286BFA621CB8521800778815 /* testing.json */; };
 		286BFA671CB8CA2A00778815 /* JSONFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286BFA661CB8CA2A00778815 /* JSONFilterViewController.swift */; };
 		286BFA691CB8F4AA00778815 /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286BFA681CB8F4AA00778815 /* JSONObject.swift */; };
+		288AE8CA20C68D27004CB9A8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288AE8C920C68D27004CB9A8 /* Searchable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		286BFA621CB8521800778815 /* testing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testing.json; sourceTree = "<group>"; };
 		286BFA661CB8CA2A00778815 /* JSONFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFilterViewController.swift; sourceTree = "<group>"; };
 		286BFA681CB8F4AA00778815 /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
+		288AE8C920C68D27004CB9A8 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 		286BFA3D1CB7B13700778815 /* JSONViewer */ = {
 			isa = PBXGroup;
 			children = (
+				288AE8C820C68D02004CB9A8 /* Models */,
 				286BFA681CB8F4AA00778815 /* JSONObject.swift */,
 				286BFA3E1CB7B13700778815 /* JSONViewer.h */,
 				286BFA401CB7B13700778815 /* Info.plist */,
@@ -146,6 +149,14 @@
 				286BFA621CB8521800778815 /* testing.json */,
 			);
 			path = TestingApp;
+			sourceTree = "<group>";
+		};
+		288AE8C820C68D02004CB9A8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				288AE8C920C68D27004CB9A8 /* Searchable.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				286BFA691CB8F4AA00778815 /* JSONObject.swift in Sources */,
+				288AE8CA20C68D27004CB9A8 /* Searchable.swift in Sources */,
 				282B549B1CBB95AB009FBFA0 /* StringExention.swift in Sources */,
 				286BFA4B1CB7B69800778815 /* JSONItemTableViewCell.swift in Sources */,
 				286BFA671CB8CA2A00778815 /* JSONFilterViewController.swift in Sources */,

@@ -28,43 +28,7 @@
 
 import Foundation
 
-class Searchable: CustomStringConvertible {
-    
-    var value: AnyObject?
-    var searchRanges = [NSRange]()
-    var index: Int?
-    
-    init(value: AnyObject?, index: Int? = nil) {
-        self.value = value
-        self.index = index
-    }
-    
-    var description: String {
-        return value?.description ?? "null"
-    }
-    
-    func isSearchable(query: String?) -> Bool {
-        searchRanges.removeAll()
-        guard let queryString = query else {
-            return false
-        }
-        
-        let text = description
-        let len = text.characters.count
-        var range = NSMakeRange(0, len)
-        while range.location != NSNotFound {
-            range = (text as NSString).range(of: queryString, options: NSString.CompareOptions.caseInsensitive, range: range)
-            
-            if range.location != NSNotFound {
-                searchRanges.append(range)
-                let location = range.length + range.location
-                range = NSMakeRange(location, len - location)
-            }
-        } // while
-        
-        return searchRanges.count > 0
-    }
-}
+
 
 class JSONItem {
     var key: String

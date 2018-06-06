@@ -39,7 +39,7 @@ public class JSONItemTableViewCell: UITableViewCell {
     
     func updateContent(key: Searchable, value: Searchable?, keyWidth: CGFloat, width: CGFloat) {
         if !key.searchRanges.isEmpty {
-            displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description + " :", ranges: key.searchRanges)
+            displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description + " :", ranges: key.searchRanges, len: key.len)
         } else {
             keyLabel.text = key.description + " :"
         }
@@ -58,17 +58,17 @@ public class JSONItemTableViewCell: UITableViewCell {
             accessoryType = .disclosureIndicator
         }
         else if let displayText = value?.description, let ranges = value?.searchRanges, !ranges.isEmpty {
-            displayValue(label: valueLabel, defaultTextColor: UIColor.darkText, displayText: displayText, ranges: ranges)
+            displayValue(label: valueLabel, defaultTextColor: UIColor.darkText, displayText: displayText, ranges: ranges, len: value?.len ?? 0)
         }
         else {
-            valueLabel.text = value?.value?.description ?? "<NULL>"
+            valueLabel.text = (value?.value as? AnyObject)?.description ?? "<NULL>"
         }
     }
     
-    private func displayValue(label: UILabel, defaultTextColor: UIColor, displayText: String, ranges: [NSRange]) {
+    private func displayValue(label: UILabel, defaultTextColor: UIColor, displayText: String, ranges: [Int], len: Int) {
         let attributedString = NSMutableAttributedString(string: displayText, attributes: [.foregroundColor : defaultTextColor])
         ranges.forEach {
-            attributedString.addAttributes([.foregroundColor: UIColor.white, .backgroundColor: tintColor.withAlphaComponent(0.5)], range: $0)
+            attributedString.addAttributes([.foregroundColor: UIColor.white, .backgroundColor: tintColor.withAlphaComponent(0.5)], range: NSMakeRange($0, len))
         } // forEach
         label.attributedText = attributedString
     }

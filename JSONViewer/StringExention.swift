@@ -29,20 +29,37 @@
 import Foundation
 
 extension String {
-   public func calculateTextSize(width: CGFloat?, height: CGFloat?, font: UIFont) -> CGSize {
-      
-      var sizeFound = false
-      var _width: CGFloat = width ?? 0.0
-      var _height: CGFloat = height ?? 0.0
-      
-      while !sizeFound {
-         let size = CGSize(width: _width, height: _height)
-        let rect = self.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
-         sizeFound = abs((rect.size.height - _height) / rect.size.height) < 0.05
-         _width = rect.size.width
-         _height = rect.size.height
-      }
-      
-      return CGSize(width: ceil(_width), height: ceil(_height))
-   }
+    public func calculateTextSize(width: CGFloat?, height: CGFloat?, font: UIFont) -> CGSize {
+        
+        var sizeFound = false
+        var _width: CGFloat = width ?? 0.0
+        var _height: CGFloat = height ?? 0.0
+        
+        while !sizeFound {
+            let size = CGSize(width: _width, height: _height)
+            let rect = self.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil)
+            sizeFound = abs((rect.size.height - _height) / rect.size.height) < 0.05
+            _width = rect.size.width
+            _height = rect.size.height
+        }
+        
+        return CGSize(width: ceil(_width), height: ceil(_height))
+    }
+    
+    /// Find the index of substring
+    ///
+    /// - Parameter subString: The query string
+    /// - Returns: All indices of substring within the string
+    func indicesOf(_ subString: String) -> [Int] {
+        var indices = [Int]()
+        var searchStartIndex = startIndex
+        
+        while searchStartIndex < endIndex, let range = range(of: subString, options: .caseInsensitive, range: searchStartIndex ..< endIndex), !range.isEmpty {
+            let index = distance(from: startIndex, to: range.lowerBound)
+            indices.append(index)
+            searchStartIndex = range.upperBound
+        }
+        
+        return indices
+    }
 }
