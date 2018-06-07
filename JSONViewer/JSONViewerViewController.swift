@@ -126,14 +126,14 @@ public class JSONViewerViewController: UIViewController {
 
 extension JSONViewerViewController: UITableViewDataSource {
 
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         var section = 1
         if let array = jsonArray, (array.display.first is JSONArray || array.display.first is JSONObject) {
             section = array.display.count
         }
         return section
     }
-
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = jsonObject?.display.count ?? 0
         if let array = jsonArray, array.display.count > section {
