@@ -32,7 +32,8 @@ let JSONViewerViewControllerIdentifier = "JSONViewerViewController"
 
 public class JSONViewerViewController: UIViewController {
 
-    @IBOutlet weak var searchBar: UISearchBar!
+    private var searchBar: UISearchBar?
+    private var searchBarButton: UIBarButtonItem?
     @IBOutlet weak var tableView: UITableView!
 
     var jsonArray: JSONArray?
@@ -64,9 +65,14 @@ public class JSONViewerViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        searchBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showSearch))
+        searchBar = UISearchBar()
+        searchBar?.placeholder = "Search"
+        searchBar?.showsCancelButton = true
+        searchBar?.delegate = self
         if let searchText = searchText, !searchText.isEmpty {
-            searchBar.text = searchText
-            searchBar(searchBar, textDidChange: searchText)
+            searchBar?.text = searchText
+            //searchBar(searchBar, textDidChange: searchText)
         } else {
             filterBySearch(searchText: nil)
         }
@@ -74,11 +80,23 @@ public class JSONViewerViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidChanged(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidDismiss), name: .UIKeyboardWillHide, object: nil)
+        navigationItem.rightBarButtonItem = searchBarButton
+    }
+    
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let seletedIndex = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: seletedIndex, animated: true)
         }
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 
     func filterBySearch(searchText: String?) {
@@ -90,6 +108,19 @@ public class JSONViewerViewController: UIViewController {
         let allKeyWidth = allUniqueKeys.map { ($0).calculateTextSize(width: nil, height: nil, font: font).width }
         keyWidth = allKeyWidth.max() ?? 120.0
         tableView.reloadData()
+    }
+    
+    @objc private dynamic func keyboardDidChanged(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue else {
+            return
+        }
+        
+        let frameEnd = keyboardFrame.cgRectValue
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frameEnd.height, right: 0)
+    }
+    
+    @objc private dynamic func keyboardDidDismiss() {
+        tableView.contentInset = UIEdgeInsets.zero
     }
 }
 
@@ -198,7 +229,7 @@ extension JSONViewerViewController: UITableViewDelegate {
 
             if value != nil {
                 viewController.title = key
-                viewController.searchText = searchBar.text
+                viewController.searchText = searchBar?.text
                 navigationController?.pushViewController(viewController, animated: true)
             } // if value != nil
         } // if let viewController, cell
@@ -206,10 +237,20 @@ extension JSONViewerViewController: UITableViewDelegate {
 }
 
 extension JSONViewerViewController: UISearchBarDelegate {
+    @objc fileprivate dynamic func showSearch() {
+        navigationItem.titleView = searchBar
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.setHidesBackButton(true, animated: true)
+        searchBar?.becomeFirstResponder()
+    }
+    
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filterBySearch(searchText: nil)
         searchBar.text = nil
         searchBar.resignFirstResponder()
+        navigationItem.rightBarButtonItem = searchBarButton
+        navigationItem.titleView = nil
+        navigationItem.setHidesBackButton(false, animated: true)
     }
 
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

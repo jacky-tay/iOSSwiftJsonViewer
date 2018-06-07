@@ -72,8 +72,9 @@ class JSONObject {
     func filterBySearch(query: String?) -> Bool {
         if let query = query, !query.isEmpty {
             display = list.filter { $0.searchConditionMeet(query: query) }
-        } else {
-            list.forEach { $0.searchConditionMeet(query: nil) }
+        }
+        else {
+            list.forEach { _ = $0.searchConditionMeet(query: nil) }
             display = list
         }
         return display.count > 0
@@ -85,7 +86,8 @@ class JSONObject {
             for item in list {
                 if let object = item.value as? JSONObject {
                     keys += object.getAllKeys(includeSubLevel: includeSubLevel)
-                } else if let array = item.value as? JSONArray {
+                }
+                else if let array = item.value as? JSONArray {
                     keys += array.getAllKeys(includeSubLevel: includeSubLevel)
                 }
             } // for item
@@ -104,9 +106,11 @@ class JSONArray {
         for item in content {
             if let dictionary = item as? Dictionary<String, AnyObject> {
                 list.append(JSONObject(content: dictionary, section: list.count + 1))
-            } else if item is NSNumber || item is Bool || item is String {
+            }
+            else if item is NSNumber || item is Bool || item is String {
                 list.append(Searchable(value: item, index: list.count + 1))
-            } else if let array = item as? Array<AnyObject> {
+            }
+            else if let array = item as? Array<AnyObject> {
                 list.append(JSONArray(content: array, section: list.count + 1))
             }
         } // forEach
@@ -132,13 +136,13 @@ class JSONArray {
         else {
             list.forEach { (item) in
                 if let jsonObject = item as? JSONObject {
-                    jsonObject.filterBySearch(query: nil)
+                    _ = jsonObject.filterBySearch(query: nil)
                 }
                 else if let array = item as? JSONArray {
-                    array.filterBySearch(query: nil)
+                    _ = array.filterBySearch(query: nil)
                 }
                 else if let jsonValue = item as? Searchable {
-                    jsonValue.isSearchable(query: nil)
+                    _ = jsonValue.isSearchable(query: nil)
                 }
             } // forEach
             display = list

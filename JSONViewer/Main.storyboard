@@ -22,19 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="FUv-TG-v1o">
-                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <scopeButtonTitles>
-                                    <string>Title</string>
-                                    <string>Title</string>
-                                </scopeButtonTitles>
-                                <connections>
-                                    <outlet property="delegate" destination="c6l-lR-b15" id="Hbk-6K-G8b"/>
-                                </connections>
-                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Jnu-tr-NEB">
-                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="PGx-rf-Qhk"/>
@@ -97,7 +86,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No Result" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HsC-9b-jRu">
                                                     <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -118,18 +107,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="FUv-TG-v1o" firstAttribute="leading" secondItem="0dE-Th-ZgY" secondAttribute="leading" id="Dxk-uf-4Rc"/>
                             <constraint firstItem="cpR-88-iGT" firstAttribute="top" secondItem="Jnu-tr-NEB" secondAttribute="bottom" id="Ouz-9b-Noa"/>
+                            <constraint firstItem="Jnu-tr-NEB" firstAttribute="top" secondItem="VA7-Dv-Hri" secondAttribute="bottom" id="Ptt-0l-uDF"/>
                             <constraint firstItem="Jnu-tr-NEB" firstAttribute="leading" secondItem="0dE-Th-ZgY" secondAttribute="leading" id="ccz-jL-Gol"/>
-                            <constraint firstItem="Jnu-tr-NEB" firstAttribute="top" secondItem="FUv-TG-v1o" secondAttribute="bottom" id="eET-Vg-Ms8"/>
-                            <constraint firstItem="FUv-TG-v1o" firstAttribute="top" secondItem="VA7-Dv-Hri" secondAttribute="bottom" id="f59-K0-fZv"/>
                             <constraint firstAttribute="trailing" secondItem="Jnu-tr-NEB" secondAttribute="trailing" id="mka-EH-wza"/>
-                            <constraint firstAttribute="trailing" secondItem="FUv-TG-v1o" secondAttribute="trailing" id="yeP-L2-E7b"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LGy-DZ-lag"/>
                     <connections>
-                        <outlet property="searchBar" destination="FUv-TG-v1o" id="UqA-og-Kp2"/>
                         <outlet property="tableView" destination="Jnu-tr-NEB" id="q6N-nC-rkB"/>
                     </connections>
                 </viewController>

@@ -41,6 +41,7 @@ public class JSONItemTableViewCell: UITableViewCell {
         if !key.searchRanges.isEmpty {
             displayValue(label: keyLabel, defaultTextColor: UIColor.darkGray, displayText: key.description, ranges: key.searchRanges, len: key.len)
         } else {
+            keyLabel.attributedText = nil
             keyLabel.text = key.description
         }
         keyWidthConstraints.constant = keyWidth
@@ -61,6 +62,7 @@ public class JSONItemTableViewCell: UITableViewCell {
             displayValue(label: valueLabel, defaultTextColor: UIColor.darkText, displayText: displayText, ranges: ranges, len: value?.len ?? 0)
         }
         else {
+            valueLabel.attributedText = nil
             valueLabel.text = (value?.value as? AnyObject)?.description ?? "<NULL>"
         }
     }
