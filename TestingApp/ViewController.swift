@@ -29,28 +29,34 @@
 import JSONViewer
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    private let cells = ["colors", "db", "testing"]
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let path = Bundle.main.path(forResource: "testing", ofType: "json"),
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cells.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
+        cell.textLabel?.text = cells[indexPath.row] + ".json"
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let path = Bundle.main.path(forResource: cells[indexPath.row], ofType: "json"),
             let content = try? String(contentsOfFile: path),
             let viewController = JSONViewerViewController.getViewController(jsonString: content) {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
 }
 

@@ -37,6 +37,8 @@
 		286BFA671CB8CA2A00778815 /* JSONFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286BFA661CB8CA2A00778815 /* JSONFilterViewController.swift */; };
 		286BFA691CB8F4AA00778815 /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286BFA681CB8F4AA00778815 /* JSONObject.swift */; };
 		288AE8CA20C68D27004CB9A8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288AE8C920C68D27004CB9A8 /* Searchable.swift */; };
+		288AE8CD20C91258004CB9A8 /* db.json in Resources */ = {isa = PBXBuildFile; fileRef = 288AE8CC20C91258004CB9A8 /* db.json */; };
+		288AE8CF20C912A9004CB9A8 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 288AE8CE20C912A9004CB9A8 /* colors.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		286BFA661CB8CA2A00778815 /* JSONFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFilterViewController.swift; sourceTree = "<group>"; };
 		286BFA681CB8F4AA00778815 /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 		288AE8C920C68D27004CB9A8 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
+		288AE8CC20C91258004CB9A8 /* db.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = db.json; sourceTree = "<group>"; };
+		288AE8CE20C912A9004CB9A8 /* colors.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = colors.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,13 +144,13 @@
 		286BFA511CB84B2500778815 /* TestingApp */ = {
 			isa = PBXGroup;
 			children = (
+				288AE8CB20C9122C004CB9A8 /* Assets */,
 				286BFA521CB84B2500778815 /* AppDelegate.swift */,
 				286BFA541CB84B2500778815 /* ViewController.swift */,
 				286BFA561CB84B2500778815 /* Main.storyboard */,
 				286BFA591CB84B2500778815 /* Assets.xcassets */,
 				286BFA5B1CB84B2500778815 /* LaunchScreen.storyboard */,
 				286BFA5E1CB84B2500778815 /* Info.plist */,
-				286BFA621CB8521800778815 /* testing.json */,
 			);
 			path = TestingApp;
 			sourceTree = "<group>";
@@ -157,6 +161,16 @@
 				288AE8C920C68D27004CB9A8 /* Searchable.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		288AE8CB20C9122C004CB9A8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				288AE8CC20C91258004CB9A8 /* db.json */,
+				288AE8CE20C912A9004CB9A8 /* colors.json */,
+				286BFA621CB8521800778815 /* testing.json */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,6 +283,8 @@
 				286BFA5D1CB84B2500778815 /* LaunchScreen.storyboard in Resources */,
 				286BFA5A1CB84B2500778815 /* Assets.xcassets in Resources */,
 				286BFA631CB8521800778815 /* testing.json in Resources */,
+				288AE8CF20C912A9004CB9A8 /* colors.json in Resources */,
+				288AE8CD20C91258004CB9A8 /* db.json in Resources */,
 				286BFA581CB84B2500778815 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
